@@ -25,7 +25,7 @@ label#ptgg_tagCountLabel {
 	display: inline;
 }
 
-input#ptgg_inputTag::-webkit-input-placeholder::first-letter {
+textarea#ptgg_inputTag::-webkit-input-placeholder::first-letter {
 	text-decoration: underline;
 	color: #ee4d2e;
 }
