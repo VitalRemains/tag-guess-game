@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name": "Pr0gramm Tag Guess Game",
+  "description": "Extension for being able to play the pr0gramm.com tag guess game.",
+  "version": "1.0.0",
+	
+	"browser_action": {
+		"default_popup": "popup.html"
+	},
+	
+	"author": "Daniel Destruktiv",
+	
+	"content_scripts": [
+    {
+      "matches": ["*://pr0gramm.com/*", "*://www.pr0gramm.com/*"],
+      "css": ["mystyles.css"],
+      "js": ["jquery-2.1.4.min.js", "myscript.js"]
+    }
+	],
+	
+  "permissions": [
+    "activeTab",
+    "https://ajax.googleapis.com/"
+  ]
+}

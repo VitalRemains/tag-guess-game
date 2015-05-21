@@ -1,0 +1,31 @@
+div.tags, span.tags-expand, span.tag, a.add-tags-link {
+	visibility: hidden;
+}
+
+div#ptgg_wrapper {
+	padding: 5px;
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	border: 1px solid white;
+}
+
+div#ptgg_wrapper a {
+	color: #ee4d2e;
+}
+
+div#ptgg_author {
+	font-size: 10px;
+	position: fixed;
+	right: 5px;
+	top: 5px;
+}
+
+label#ptgg_tagCountLabel {
+	display: inline;
+}
+
+input#ptgg_inputTag::-webkit-input-placeholder::first-letter {
+	text-decoration: underline;
+	color: #ee4d2e;
+}
