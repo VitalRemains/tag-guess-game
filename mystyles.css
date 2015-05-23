@@ -29,3 +29,7 @@ textarea#ptgg_inputTag::-webkit-input-placeholder::first-letter {
 	text-decoration: underline;
 	color: #ee4d2e;
 }
+
+input#ptgg_showTagsCheck {
+  margin-right: 5px;
+}

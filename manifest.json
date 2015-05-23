@@ -3,7 +3,7 @@
 
   "name": "Pr0gramm Tag Guess Game",
   "description": "Extension for being able to play the pr0gramm.com tag guess game.",
-  "version": "1.0.0",
+  "version": "1.1",
 	
 	"browser_action": {
 		"default_icon": {

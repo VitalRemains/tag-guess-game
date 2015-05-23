@@ -1,52 +1,70 @@
 $(document).ready(function() {
-	
-	setTimeout(function() {
-		/*
-		if ($('body').find('.item-container').length == 0 && getCookie('randomPost') == 'true') {
-			var rand = getRandomPostNumber();
-			window.location.href = 'http://pr0gramm.com/top/' + rand;
-		} else {
-			setCookie('randomPost', 'false');
-		}
-		*/
-		$(document).keydown(function(e) {
-			if(!$('#ptgg_inputTag').is(':focus') && !$('textarea.comment').is(':focus')) {
-				if(e.which == '78') {
-					$('#ptgg_tagCountNumber').click();
-				}
-				if(e.which == '72') {
-					$('#ptgg_showTags').click();
-				}
-				if(e.which == '82') {
-					$('#ptgg_randomPost').click();
-				}
-				if(e.which == '73') {
-					e.preventDefault();
-					$('#ptgg_inputTag').focus();
-				}
-			} else {
-				if(e.which == '73' && e.ctrlKey) {
-					e.preventDefault();
-					$('#ptgg_inputTag').blur();
-				}
-			}
-		});
-	}, 1000);
+
+  $(document).keydown(function(e) {
+    if(!$('#ptgg_inputTag').is(':focus') && !$('textarea.comment').is(':focus')) {
+      if(e.which == '78') {
+        $('#ptgg_tagCountNumber').click();
+      }
+      if(e.which == '72') {
+        if(e.which == '72' && e.ctrlKey) {
+          $('#ptgg_showTagsCheck').click();
+        } else {
+          $('#ptgg_showTags').click();
+        }
+      }
+      if(e.which == '82') {
+        $('#ptgg_randomPost').click();
+      }
+      if(e.which == '73') {
+        e.preventDefault();
+        $('#ptgg_inputTag').focus();
+      }
+      if(e.which == '37' || e.which == '39') {
+        showIfTagsCheck();
+      }
+    } else {
+      if(e.which == '73' && e.ctrlKey) {
+        e.preventDefault();
+        $('#ptgg_inputTag').blur();
+      }
+    }
+  });
+
+  $('a.silent.thumb').click(function() {
+    showIfTagsCheck();
+  });
 	
 	var div = $('<div>', {
 		'id': 'ptgg_wrapper'
 	});
-	
+
+  var showTagsCheck = $('<input>', {
+    'type': 'checkbox',
+    'id': 'ptgg_showTagsCheck'
+  }).change(function() {
+    if($(this).is(':checked')) {
+      setCookie('showTagsCheck', 'true');
+    } else {
+      setCookie('showTagsCheck', 'false');
+    }
+    showIfTagsCheck();
+  }).appendTo(div);
+
 	var showTags = $('<a>', {
 		'id': 'ptgg_showTags'
-	}).html('S<u>h</u>ow Tags')
+	}).html('S<u>h</u>ow / <u>H</u>ide Tags')
 		.click(function() {
-			$('div.tags').css('visibility', 'visible');
-			$('span.action.tags-expand').click();
-			$.each($('div.tags').find('span.tag'), function(index, item) {
-				$(item).css('visibility', 'visible');
-			});
-			$('a.add-tags-link').css('visibility', 'visible');
+      console.log($('div.tags').css('visibility'));
+			if($('div.tags').css('visibility') == 'visible') {
+        $('div.tags').css('display', 'none').css('visibility', 'hidden');
+      } else {
+        $('div.tags').css('visibility', 'visible').css('display', 'block');
+        $('span.action.tags-expand').click();
+        $.each($('div.tags').find('span.tag'), function(index, item) {
+          $(item).css('visibility', 'visible');
+        });
+        $('a.add-tags-link').css('visibility', 'visible');
+      }
 		})
 		.appendTo(div);
 	
@@ -103,40 +121,10 @@ $(document).ready(function() {
 	}).html('<u>R</u>andom Post')
 		.click(function() {
 			getRandomVisiblePost();
-			/*
-			if(getCookie('randomPost') == '' || getCookie('randomPost') == 'false') {
-				setCookie('randomPost', 'true');
-				var rand = getRandomPostNumber();
-				window.location.href = 'http://pr0gramm.com/top/' + rand;
-			} else {
-				setCookie('randomPost', 'false');
-			}
-			*/
 		})
 		.appendTo(div);
 	
 	div.append('<br/><br/>');
-	
-	/*
-	var tagCount = $('<input>', {
-		'type': 'checkbox',
-		'id': 'ptgg_tagCount',
-	}).change(function() {
-		if($(this).is(':checked')) {
-			$('#ptgg_tagCountNumber').show();
-		} else {
-			$('#ptgg_tagCountNumber').hide();
-		}
-	}).appendTo(div);
-	
-	var tagCountLabel = $('<label>', {
-		'for': 'ptgg_tagCount',
-		'id': 'ptgg_tagCountLabel'
-	}).text(' Show Tag Count')
-		.appendTo(div);
-	*/
-	
-	//div.append('<br/>');
 	
 	var tagCountNumber = $('<a>', {
 		'id': 'ptgg_tagCountNumber'
@@ -151,8 +139,25 @@ $(document).ready(function() {
 	}).text('© Daniel Destruktiv');
 		
 	$('body').append(div).append(author);
+
+  showIfTagsCheck();
 	
 });
+
+function showIfTagsCheck() {
+  if(getCookie('showTagsCheck') == 'true') {
+    $('#ptgg_showTagsCheck').attr('checked', 'checked');
+    $('div.tags').css('visibility', 'visible').css('display', 'block');
+    $('span.tags-expand').css('visibility', 'visible');
+    $('span.tag').css('visibility', 'visible');
+    $('a.add-tags-link').css('visibility', 'visible');
+  } else {
+    $('div.tags').css('visibility', 'hidden').css('display', 'none');
+    $('span.tags-expand').css('visibility', 'hidden');
+    $('span.tag').css('visibility', 'hidden');
+    $('a.add-tags-link').css('visibility', 'hidden');
+  }
+}
 
 /*
 function getRandomPostNumber() {
@@ -172,7 +177,6 @@ function setTagCountNumber() {
 }
 */
 
-/*
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -190,4 +194,3 @@ function getCookie(cname) {
     }
     return "";
 }
-*/
